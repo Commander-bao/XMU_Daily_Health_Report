@@ -37,6 +37,15 @@
 ![](images/password.jpg)
 ### 这时如果你显示的和我一样，证明你配置成功了！
 ![](images/finish.jpg)
+### 完成后，每天早上六点会自己运行，如需另外测试，请点击Actions
+![](images/actions.jpg)
+### 而后点击AutoCheckIn.js
+![](images/workflow.jpg)
+### 点击Run workflow
+![](images/run.jpg)
+### 再点击Run workflow
+![](images/runWorkflow.jpg)
+### 刷新一下，点击去就能看到运行过程了
 
 ## 如果想在本地配置puppeteer，下面是教程
 ### 首先进入nodejs的官网 https://nodejs.org/en/
