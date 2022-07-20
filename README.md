@@ -58,4 +58,3 @@
 ### 最后，把我的xmuAutoCheckIn.js文件放进这个文件夹,用vscode就能运行了
 
 ## 树莓派安装 https://zhuanlan.zhihu.com/p/127757097
-不过树莓派是32位系统，运行似乎会报错
