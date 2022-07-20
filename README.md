@@ -36,3 +36,26 @@
 ![](images/password.jpg)
 ### 这时如果你显示的和我一样，证明你配置成功了！
 ![](images/finish.jpg)
+
+## 如果想在本地配置puppeteer，下面是教程
+### 首先进入nodejs的官网 https://nodejs.org/en/
+![](images/1.jpg)
+### 点击下载，这里我没有选最新版本，看个人
+![](images/2.jpg)
+### Windows 64位机下载x64.smi文件
+### 下载完后找个文件夹安装，一路next就行，它会自动添加path路径
+![](images/3.jpg)
+### 安装完的样子
+![](images/4.jpg)
+### 开个终端看看npm是不是安装成功了
+![](images/5.jpg)
+### 成功之后建个文件夹，我命名成了puppeteer
+### 然后输入npm init，一路回车就行
+![](images/6.jpg)
+### 再输入npm install puppeteer，回车
+![](images/7.jpg)
+### 到此puppeteer安装完成
+### 最后，把我的xmuAutoCheckIn.js文件放进这个文件夹,用vscode就能运行了
+
+## 树莓派安装 https://zhuanlan.zhihu.com/p/127757097
+不过树莓派是32位系统，运行似乎会报错
