@@ -1,5 +1,5 @@
 # 厦大每日健康打卡，由commander-bao本人独立完成
-## version 1.1.0
+## version 1.2.0
 
 ## 免责声明
 
