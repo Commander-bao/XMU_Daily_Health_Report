@@ -1,0 +1,32 @@
+name: AutoCheckIn.js
+ 
+on:
+  workflow_dispatch:
+  schedule:   
+    - cron: '0 22 * * *'   #国际标准时间，北京时间+8，即早上6点钟
+ 
+jobs:
+  run-workflows:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@main  #采用main分支下的
+           
+      - name: Setup Node.js
+        uses: actions/setup-node@v2  #安装node.js
+        with:
+          node-version: '14'
+          
+      - name: Install Dependency       
+        run: |
+          npm init -y
+          npm install puppeteer    
+          npm install nodemailer --save
+      - name: Run CheckIn
+        env:
+          USERNAME: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          EMAIL: ${{ secrets.EMAIL }}
+        run: |
+          node ./xmuAutoCheckIn.js
+          
