@@ -1,4 +1,4 @@
-// version 1.2.0
+// version 1.2.1
 const puppeteer = require('puppeteer');
 
 (async () => {
@@ -16,7 +16,7 @@ const puppeteer = require('puppeteer');
             time = Math.round(Math.random()*3600);
             time *= 1000;
             console.log("延后%d分钟执行", parseInt(time / 60000));
-            await page.waitForTimeout(1000);
+            await page.waitForTimeout(time);
             $button.click();
             console.log("进入登录页面中...\n");
         } else if (url.startsWith('https://ids.xmu.edu.cn/authserver/login?service=https://xmuxg.xmu.edu.cn/login/cas/xmu')) {
@@ -83,18 +83,6 @@ const puppeteer = require('puppeteer');
                 }
             });
 
-            let mailOptions = {
-                from: '"commander-bao" <commander_bao@163.com>',
-                to: email, 
-                subject: '健康打卡成功',
-                text: getBeijingtime() + '\n' + '感谢使用，如果觉得好用麻烦在GitHub上给个小星星哦\n来自commander-bao'
-            };
-
-            transporter.sendMail(mailOptions, (error, info) => {
-                if (error) {
-                return console.log(error);
-                }
-                
             function getBeijingtime() {
                 //获得当前运行环境时间
                 var d = new Date();
@@ -109,6 +97,26 @@ const puppeteer = require('puppeteer');
                 }
                 return currentDate;
             }
+            
+            getBeijingtime();
+            
+            let mailOptions = {
+                from: '"commander-bao" <commander_bao@163.com>',
+                to: email, 
+                subject: '健康打卡成功',
+                text: currentDate.getFullYear() + '年' +
+                      (currentDate.getMonth() + 1) + '月' +
+                      currentDate.getDate() + '日' +
+                      currentDate.getHours() + '时' +
+                      currentDate.getMinutes() + '分' +
+                      '\n\n' + '感谢使用，如果觉得好用麻烦在GitHub上给个小星星哦\n\n来自commander-bao'
+            };
+
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                return console.log(error);
+                }
+                
             });
         }
     });
