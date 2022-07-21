@@ -87,7 +87,7 @@ const puppeteer = require('puppeteer');
                 from: '"commander-bao" <commander_bao@163.com>',
                 to: email, 
                 subject: '健康打卡成功',
-                text: Date().getTimezoneOffset()*8 + '\n' + '感谢使用，如果觉得好麻烦在GitHub上给个小星星哦\n来自commander-bao'
+                text: Date() + '\n' + '感谢使用，如果觉得好麻烦在GitHub上给个小星星哦\n来自commander-bao'
             };
 
             transporter.sendMail(mailOptions, (error, info) => {
