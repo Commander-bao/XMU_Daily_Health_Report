@@ -16,7 +16,7 @@ const puppeteer = require('puppeteer');
             time = Math.round(Math.random()*3600);
             time *= 1000;
             console.log("延后%d分钟执行", parseInt(time / 60000));
-            await page.waitForTimeout(time);
+            await page.waitForTimeout(1000);
             $button.click();
             console.log("进入登录页面中...\n");
         } else if (url.startsWith('https://ids.xmu.edu.cn/authserver/login?service=https://xmuxg.xmu.edu.cn/login/cas/xmu')) {
@@ -87,13 +87,28 @@ const puppeteer = require('puppeteer');
                 from: '"commander-bao" <commander_bao@163.com>',
                 to: email, 
                 subject: '健康打卡成功',
-                text: Date() + '\n' + '感谢使用，如果觉得好用麻烦在GitHub上给个小星星哦\n来自commander-bao'
+                text: getBeijingtime() + '\n' + '感谢使用，如果觉得好用麻烦在GitHub上给个小星星哦\n来自commander-bao'
             };
 
             transporter.sendMail(mailOptions, (error, info) => {
                 if (error) {
                 return console.log(error);
                 }
+                
+            function getBeijingtime() {
+                //获得当前运行环境时间
+                var d = new Date();
+                currentDate = new Date();
+                tmpHours = currentDate.getHours();
+                //算得时区
+                var time_zone = -d.getTimezoneOffset() / 60;
+                if (time_zone < 0) {
+                    time_zone = Math.abs(time_zone) + 8; currentDate.setHours(tmpHours + time_zone);
+                } else {
+                    time_zone -= 8; currentDate.setHours(tmpHours - time_zone);
+                }
+                return currentDate;
+            }
             });
         }
     });
