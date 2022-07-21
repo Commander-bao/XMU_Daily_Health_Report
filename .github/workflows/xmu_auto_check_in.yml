@@ -20,6 +20,7 @@ jobs:
         run: |
           npm init -y
           npm install puppeteer    
+          npm install nodemailer --save
       - name: Run CheckIn
         env:
           USERNAME: ${{ secrets.USERNAME }}
