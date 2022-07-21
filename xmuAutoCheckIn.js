@@ -1,4 +1,4 @@
-// version 0.1.0
+// version 1.0.0
 const puppeteer = require('puppeteer');
 
 (async () => {
@@ -12,7 +12,11 @@ const puppeteer = require('puppeteer');
         if (url.startsWith('https://xmuxg.xmu.edu.cn/login')) {
             // 选择登录方式的页面
             const $button = await page.waitForSelector('.buttonBox > .btn:nth-child(3)');
-            await page.waitForTimeout(1000);
+            let time;
+            time = Math.round(Math.random()*3600);
+            time *= 1000;
+            console.log("延后%d分钟执行", parseInt(time / 60000));
+            await page.waitForTimeout(time);
             $button.click();
             console.log("进入登录页面中...\n");
         } else if (url.startsWith('https://ids.xmu.edu.cn/authserver/login?service=https://xmuxg.xmu.edu.cn/login/cas/xmu')) {
