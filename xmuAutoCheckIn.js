@@ -16,7 +16,7 @@ const puppeteer = require('puppeteer');
             time = Math.round(Math.random()*3600);
             time *= 1000;
             console.log("延后%d分钟执行", parseInt(time / 60000));
-            await page.waitForTimeout(time);
+            await page.waitForTimeout(1000);
             $button.click();
             console.log("进入登录页面中...\n");
         } else if (url.startsWith('https://ids.xmu.edu.cn/authserver/login?service=https://xmuxg.xmu.edu.cn/login/cas/xmu')) {
@@ -69,6 +69,32 @@ const puppeteer = require('puppeteer');
             await page.waitForTimeout(5000);
             await browser.close();
             console.log("打卡成功\n");
+            
+            let email;
+            email = process.env.EMAIL;
+            const nodemailer = require('nodemailer');
+            let transporter = nodemailer.createTransport({
+                host: 'smtp.163.com',
+                port: 465,
+                secure: true,
+                auth: {
+                user: 'commander_bao@163.com',
+                pass: 'XEYMUNNXEUWZAGHR'
+                }
+            });
+
+            let mailOptions = {
+                from: '"commander-bao" <commander_bao@163.com>',
+                to: email, 
+                subject: '健康打卡成功',
+                text: Date() + '\n' + '感谢使用，如果觉得好麻烦在GitHub上给个小星星哦\n来自commander-bao'
+            };
+
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                return console.log(error);
+                }
+            });
         }
     });
     // 打开第一个页面
