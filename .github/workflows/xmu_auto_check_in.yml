@@ -25,6 +25,7 @@ jobs:
         env:
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
+          EMAIL: ${{ secrets.EMAIL }}
         run: |
           node ./xmuAutoCheckIn.js
           
