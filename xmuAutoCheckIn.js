@@ -72,6 +72,7 @@ const puppeteer = require('puppeteer');
             
             let email;
             email = process.env.EMAIL;
+            email = String(email);
             const nodemailer = require('nodemailer');
             let transporter = nodemailer.createTransport({
                 host: 'smtp.163.com',
