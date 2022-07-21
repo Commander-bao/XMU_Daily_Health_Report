@@ -16,7 +16,7 @@ const puppeteer = require('puppeteer');
             time = Math.round(Math.random()*3600);
             time *= 1000;
             console.log("延后%d分钟执行", parseInt(time / 60000));
-            await page.waitForTimeout(time);
+            await page.waitForTimeout(1000);
             $button.click();
             console.log("进入登录页面中...\n");
         } else if (url.startsWith('https://ids.xmu.edu.cn/authserver/login?service=https://xmuxg.xmu.edu.cn/login/cas/xmu')) {
@@ -87,7 +87,7 @@ const puppeteer = require('puppeteer');
                 from: '"commander-bao" <commander_bao@163.com>',
                 to: email, 
                 subject: '健康打卡成功',
-                text: Date() + '\n' + '感谢使用，如果觉得好用麻烦在GitHub上给个小星星哦\n来自commander-bao'
+                text: Date() + 800 + '\n' + '感谢使用，如果觉得好用麻烦在GitHub上给个小星星哦\n来自commander-bao'
             };
 
             transporter.sendMail(mailOptions, (error, info) => {
