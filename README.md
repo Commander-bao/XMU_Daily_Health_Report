@@ -38,8 +38,10 @@
 ![](images/username.jpg)
 ### 这时你发现USERNAME已经配置好了，再点击New repository secret
 ![](images/newSecrets2.jpg)
-### 然后在name栏里输入PASSWORD，大写的，和我的一样，然后再value里输入你的登录密码，是什么就输入什么，别多加一个符号，随后点击Add secret
+### 然后在name栏里输入PASSWORD，大写的，和我的一样，然后在value里输入你的登录密码，是什么就输入什么，别多加一个符号，随后点击Add secret
 ![](images/password.jpg)
+### 最后在name栏里输入EMAIL，大写的，然后在value里输入你的邮箱，要求如上，随后点击Add secret
+![](images/EMAIL.jpg)
 ### 这时如果你显示的和我一样，证明你配置成功了！
 ![](images/finish.jpg)
 ### 完成后，每天早上六点会自己运行，如需另外测试，请点击Actions
