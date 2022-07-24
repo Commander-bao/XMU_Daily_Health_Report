@@ -78,3 +78,4 @@
 ### 最后，把我的xmuAutoCheckIn.js文件放进这个文件夹,用vscode就能运行了
 
 ## 树莓派安装 https://zhuanlan.zhihu.com/p/127757097
+### 温馨提示：树莓派需要使用最新的64位操作系统才能运行
