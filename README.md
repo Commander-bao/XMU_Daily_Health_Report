@@ -72,6 +72,9 @@
 ### 再输入npm install puppeteer，回车
 ![](images/7.jpg)
 ### 到此puppeteer安装完成
+### 由于新增了发送邮件的功能，需要再安装一个nodemailer模块
+### 在之前的基础上输入npm install nodemailer --save
+![](images/8.jpg)
 ### 最后，把我的xmuAutoCheckIn.js文件放进这个文件夹,用vscode就能运行了
 
 ## 树莓派安装 https://zhuanlan.zhihu.com/p/127757097
