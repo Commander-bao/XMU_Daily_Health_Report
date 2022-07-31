@@ -45,6 +45,7 @@
 ### 这时如果你显示的和我一样，证明你配置成功了！
 ![](images/finish.jpg)
 ### 完成后，每天早上六点会自己运行，如需另外测试，请点击Actions
+![](images/action.jpg)
 ### 而后点击AutoCheckIn.js
 ![](images/workflow.jpg)
 ### 点击Run workflow
