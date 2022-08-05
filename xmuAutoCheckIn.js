@@ -110,7 +110,7 @@ const puppeteer = require('puppeteer');
                       currentDate.getDate() + '日' +
                       currentDate.getHours() + '时' +
                       currentDate.getMinutes() + '分' +
-                      '\n\n' + '感谢使用，如果觉得好用麻烦在GitHub上给个小星星哦https://github.com/Commander-bao/XMU_Daily_Health_Report\n\n来自commander-bao'
+                      '\n\n感谢使用，如果觉得好用麻烦在GitHub上给个小星星哦https://github.com/Commander-bao/XMU_Daily_Health_Report\n\n如果遇到问题，请检查是否为学校服务器问题，我这边也会第一时间维护哦\n\n来自commander-bao'
             };
 
             transporter.sendMail(mailOptions, (error, info) => {
