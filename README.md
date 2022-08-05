@@ -1,6 +1,6 @@
 # 厦大每日健康打卡，由commander-bao本人独立完成
 提示：请认真阅读以下文档。如果发现图片无法加载，需要挂上梯子哦，想测试成功记得允许Actions
-
+视频教程网址 https://v.youku.com/v_show/id_XNTg5MTQ0MjMyNA==.html 密码 xmuHealth
 ## version 1.2.2 修复了运行时卡住无法退出的bug
 ## 历史版本
 #### version 1.2.1 修复了打卡时间是格林威治时间的bug
