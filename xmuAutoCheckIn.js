@@ -1,6 +1,51 @@
-// version 1.2.2
+// version 1.3.0
 
 const puppeteer = require('puppeteer');
+let steps = ['进入登录页面', '进入学工系统', '点击保存'];
+let flag = 0;
+let errorTimer;
+let email;
+email = process.env.EMAIL;
+
+function getBeijingtime() {
+    //获得当前运行环境时间
+    var d = new Date();
+    let currentDate = new Date();
+    let tmpHours = currentDate.getHours();
+    //算得时区
+    var time_zone = -d.getTimezoneOffset() / 60;
+    if (time_zone < 0) {
+        time_zone = Math.abs(time_zone) + 8; currentDate.setHours(tmpHours + time_zone);
+    } else {
+        time_zone -= 8; currentDate.setHours(tmpHours - time_zone);
+    }
+    return currentDate;
+}
+
+function sendEmail(title, content){
+    const nodemailer = require('nodemailer');
+    let transporter = nodemailer.createTransport({
+        host: 'smtp.163.com',
+        port: 465,
+        secure: true,
+        auth: {
+        user: 'commander_bao@163.com', //邮箱的账号
+        pass: 'XEYMUNNXEUWZAGHR'//邮箱的密码
+        }
+    });
+    let mailOptions = {
+        from: '"commander-bao" <commander_bao@163.com>',
+        to: email, 
+        subject: title,
+        text: content
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+        return console.log(error);
+        }
+    });
+}
+
 
 (async () => {
     const browser = await puppeteer.launch({headless: process.platform !== 'win32', args: ['--start-maximized'], defaultViewport: null});
@@ -18,10 +63,14 @@ const puppeteer = require('puppeteer');
             time *= 1000;
             console.log("延后%d分钟执行", parseInt(time / 60000));
             await page.waitForTimeout(time);
+            errorTimer = setTimeout( () => {
+                sendEmail('健康打卡失败', '步骤 ' + steps[flag] + ' 失败\n\n请检查是否为学校服务器问题，我这边也会第一时间维护哦\n\n来自commander-bao');
+            }, 180 * 1000);
             $button.click();
             console.log("进入登录页面中...\n");
         } else if (url.startsWith('https://ids.xmu.edu.cn/authserver/login?service=https://xmuxg.xmu.edu.cn/login/cas/xmu')) {
             console.log("进入登录页面成功\n");
+            flag = 1;
             // 账号登录的页面
             const StudentNum = await page.waitForSelector('#username');
             const PasswordVpn = await page.waitForSelector('#password');
@@ -41,6 +90,7 @@ const puppeteer = require('puppeteer');
         } else if (url.startsWith('https://xmuxg.xmu.edu.cn/platform')) {
             // 其他页面
             console.log("进入学工系统成功\n");
+            flag = 2;
             page.goto('https://xmuxg.xmu.edu.cn/app/214');
             const MyForms = await page.waitForXPath('//*[@id="mainM"]/div/div/div/div[1]/div[2]/div/div[3]/div[2]');
             await page.waitForTimeout(1000);
@@ -70,55 +120,15 @@ const puppeteer = require('puppeteer');
             await page.waitForTimeout(5000);
             await browser.close();
             console.log("打卡成功\n");
-            
-            let email;
-            email = process.env.EMAIL;
-            const nodemailer = require('nodemailer');
-            let transporter = nodemailer.createTransport({
-                host: 'smtp.163.com',
-                port: 465,
-                secure: true,
-                auth: {
-                user: 'commander_bao@163.com',
-                pass: 'XEYMUNNXEUWZAGHR'
-                }
-            });
-
-            function getBeijingtime() {
-                //获得当前运行环境时间
-                var d = new Date();
-                currentDate = new Date();
-                tmpHours = currentDate.getHours();
-                //算得时区
-                var time_zone = -d.getTimezoneOffset() / 60;
-                if (time_zone < 0) {
-                    time_zone = Math.abs(time_zone) + 8; currentDate.setHours(tmpHours + time_zone);
-                } else {
-                    time_zone -= 8; currentDate.setHours(tmpHours - time_zone);
-                }
-                return currentDate;
-            }
-            
-            getBeijingtime();
-            
-            let mailOptions = {
-                from: '"commander-bao" <commander_bao@163.com>',
-                to: email, 
-                subject: '健康打卡成功',
-                text: currentDate.getFullYear() + '年' +
-                      (currentDate.getMonth() + 1) + '月' +
-                      currentDate.getDate() + '日' +
-                      currentDate.getHours() + '时' +
-                      currentDate.getMinutes() + '分' +
-                      '\n\n感谢使用，如果觉得好用麻烦在GitHub上给个小星星哦https://github.com/Commander-bao/XMU_Daily_Health_Report\n\n如果遇到问题，请检查是否为学校服务器问题，我这边也会第一时间维护哦\n\n来自commander-bao'
-            };
-
-            transporter.sendMail(mailOptions, (error, info) => {
-                if (error) {
-                return console.log(error);
-                }
-                
-            });
+            clearTimeout(errorTimer);
+            const currentDate = getBeijingtime();
+            const text = currentDate.getFullYear() + '年' +
+                        (currentDate.getMonth() + 1) + '月' +
+                        currentDate.getDate() + '日' +
+                        currentDate.getHours() + '时' +
+                        currentDate.getMinutes() + '分' +
+                        '\n\n' + '感谢使用，如果觉得好用麻烦在GitHub上给个小星星哦https://github.com/Commander-bao/XMU_Daily_Health_Report\n\n如果遇到问题，请检查是否为学校服务器问题，我这边也会第一时间维护哦\n\n来自commander-bao'
+            sendEmail('健康打卡成功', text);
         }
     });
     // 打开第一个页面
