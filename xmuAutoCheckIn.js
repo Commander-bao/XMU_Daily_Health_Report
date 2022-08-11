@@ -1,4 +1,4 @@
-// version 1.3.0
+// version 1.3.1
 
 const puppeteer = require('puppeteer');
 let steps = ['进入登录页面', '进入学工系统', '点击保存'];
@@ -63,8 +63,10 @@ function sendEmail(title, content){
             time *= 1000;
             console.log("延后%d分钟执行", parseInt(time / 60000));
             await page.waitForTimeout(time);
-            errorTimer = setTimeout( () => {
+            errorTimer = setTimeout( async () => {
                 sendEmail('健康打卡失败', '步骤 ' + steps[flag] + ' 失败\n\n请检查是否为学校服务器问题，我这边也会第一时间维护哦\n\n来自commander-bao');
+                await page.waitForTimeout(5000);
+                browser.close();
             }, 180 * 1000);
             $button.click();
             console.log("进入登录页面中...\n");
@@ -118,7 +120,6 @@ function sendEmail(title, content){
                 await dialog.accept();
             });
             await page.waitForTimeout(5000);
-            await browser.close();
             console.log("打卡成功\n");
             clearTimeout(errorTimer);
             const currentDate = getBeijingtime();
@@ -129,6 +130,7 @@ function sendEmail(title, content){
                         currentDate.getMinutes() + '分' +
                         '\n\n' + '感谢使用，如果觉得好用麻烦在GitHub上给个小星星哦https://github.com/Commander-bao/XMU_Daily_Health_Report\n\n如果遇到问题，请检查是否为学校服务器问题，我这边也会第一时间维护哦\n\n来自commander-bao'
             sendEmail('健康打卡成功', text);
+            await browser.close();
         }
     });
     // 打开第一个页面
