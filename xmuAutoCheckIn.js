@@ -1,4 +1,4 @@
-// version 1.3.1
+// version 1.3.2
 
 const puppeteer = require('puppeteer');
 let steps = ['进入登录页面', '进入学工系统', '点击保存'];
@@ -118,18 +118,24 @@ function sendEmail(title, content){
             page.on('dialog', async dialog => {
                 console.log(dialog.message());
                 await dialog.accept();
+                console.log("打卡成功\n");
+                flag = 3;
             });
             await page.waitForTimeout(5000);
-            console.log("打卡成功\n");
             clearTimeout(errorTimer);
-            const currentDate = getBeijingtime();
-            const text = currentDate.getFullYear() + '年' +
-                        (currentDate.getMonth() + 1) + '月' +
-                        currentDate.getDate() + '日' +
-                        currentDate.getHours() + '时' +
-                        currentDate.getMinutes() + '分' +
-                        '\n\n' + '感谢使用，如果觉得好用麻烦在GitHub上给个小星星哦https://github.com/Commander-bao/XMU_Daily_Health_Report\n\n如果遇到问题，请检查是否为学校服务器问题，我这边也会第一时间维护哦\n\n来自commander-bao'
-            sendEmail('健康打卡成功', text);
+            if (flag === 3) {
+                const currentDate = getBeijingtime();
+                const text = currentDate.getFullYear() + '年' +
+                            (currentDate.getMonth() + 1) + '月' +
+                            currentDate.getDate() + '日' +
+                            currentDate.getHours() + '时' +
+                            currentDate.getMinutes() + '分' +
+                            '\n\n' + '感谢使用，如果觉得好用麻烦在GitHub上给个小星星哦https://github.com/Commander-bao/XMU_Daily_Health_Report\n\n如果遇到问题，请检查是否为学校服务器问题，我这边也会第一时间维护哦\n\n来自commander-bao'
+                sendEmail('健康打卡成功', text);                
+            } else {
+                console.log("打卡失败\n");
+                sendEmail('健康打卡失败', '点击保存按钮无法保存，请检查打卡系统是否有新增内容未填写\n\n来自commander-bao');
+            }
             await browser.close();
         }
     });
